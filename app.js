@@ -87,7 +87,7 @@ watcher.on('unlink', (path) => {
 // Start the watcher
 watcher.on('ready', () => {
   runBuild();
-  console.log(`Watching for changes in ${VAULT_DIR}.2..`);
+  console.log(`Watching for changes in ${VAULT_DIR}, specifically in folder ${FOLDER} of vault...`);
 });
 
 
