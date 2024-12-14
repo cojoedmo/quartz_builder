@@ -14,12 +14,12 @@ const runCommand = (cmd) => {
   return new Promise((resolve, reject) => {
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
-        // reject(`Error: ${error.message}`); //Because some libraries are deprecated it otherwise breaks
+        // reject(`Error: ${error.message}`); //Because some libraries are deprecated it otherwise breaks as they throw an error
         resolve(`stderr: ${stderr}`);
         return;
       }
       if (stderr) {
-        // reject(`stderr: ${stderr}`);
+        // reject(`stderr: ${stderr}`); //Because some libraries are deprecated it otherwise breaks as they an throw error
         resolve(`stderr: ${stderr}`);
         return;
       }
@@ -38,8 +38,7 @@ const runBuild = async () => {
 
     await runCommand(`rm -rf ${OUTPUT_DIR}/*`);  // Remove all files in the output directory
     await runCommand(`cp -r /quartz/public/* ${OUTPUT_DIR}`)
-    console.log(`Quartz build completed successfu
-      lly to ${OUTPUT_DIR}!`);
+    console.log(`Quartz build completed successfully to ${OUTPUT_DIR}!`);
   } catch (error) {
     console.error('Build failed:', error);
   }
@@ -56,7 +55,8 @@ const watcher = chokidar.watch(directory, {
   usePolling: true, // Poll instead of using native fs events (useful for Docker containers)
   interval: TIMER/10 * 60000, // Time in ms between each polling at 10 times the rate of update
   atomic: true, // Makes sure files are fully written before triggering an event
-  recursive: true
+  recursive: true,
+  ignoreInitial: true, // Ignore initial files as we are already doing a build on start
 });
 
 let timeout;
@@ -90,6 +90,8 @@ watcher.on('ready', () => {
   console.log(`Watching for changes in ${VAULT_DIR}.2..`);
 });
 
+
+//Express server to serve the files
 const express = require('express');
 const app = express();
 const PORT = 3000;
