@@ -1,0 +1,13 @@
+{
+    "name": "quartz-builder",
+    "version": "1.0.0",
+    "description": "A container that monitors a vault and builds Quartz.",
+    "main": "build-quartz.js",
+    "scripts": {
+      "start": "node build-quartz.js"
+    },
+    "dependencies": {
+      "chokidar": "^4.0.1"
+    }
+  }
+  

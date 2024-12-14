@@ -1,0 +1,2 @@
+# Run the build-quartz.sh script every X minutes (e.g., every 10 minutes)
+*/10 * * * * root /usr/local/bin/build-quartz.sh >> /var/log/cron.log 2>&1
